@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Global Page Style -->
+    <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+        <Setter Property="BackgroundColor" Value="{StaticResource BackgroundDark}" />
+    </Style>
+
+    <!-- Buttons -->
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="TextColor" Value="{StaticResource TextWhite}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="CornerRadius" Value="25" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="Padding" Value="20,0" />
+    </Style>
+
+    <!-- Entries (Inputs) -->
+    <Style x:Key="DarkEntry" TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource TextWhite}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextGray}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Transparent}" />
+    </Style>
+
+    <!-- Frame Containers -->
+    <Style x:Key="DarkFrame" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceDark}" />
+        <Setter Property="BorderColor" Value="{StaticResource BorderDark}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HasShadow" Value="False" />
+    </Style>
+
+    <!-- Labels -->
+    <Style x:Key="HeaderLabel" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextPink}" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="SecondaryLabel" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource TextGray}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="SearchBarStyle" TargetType="SearchBar">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceDark}" />
+        <Setter Property="TextColor" Value="{StaticResource TextWhite}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource TextGray}" />
+    </Style>
+
+    <!-- Shell Styling -->
+    <Style TargetType="Shell" ApplyToDerivedTypes="True">
+        <Setter Property="Shell.BackgroundColor" Value="{StaticResource BackgroundDark}" />
+        <Setter Property="Shell.ForegroundColor" Value="{StaticResource TextPink}" />
+        <Setter Property="Shell.TitleColor" Value="{StaticResource TextWhite}" />
+        <Setter Property="Shell.UnselectedColor" Value="{StaticResource TextGray}" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource BackgroundDark}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource TextGray}" />
+    </Style>
+
+</ResourceDictionary>

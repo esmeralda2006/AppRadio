@@ -1,0 +1,72 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RadioFreeDAM.App.ViewModels.Favorites"
+             xmlns:models="clr-namespace:RadioFreeDAM.App.Models"
+             x:Class="RadioFreeDAM.App.Views.Favorites.FavoritesPage"
+             Title="Favoritos">
+    
+    <Grid RowDefinitions="Auto,*" Padding="20">
+        <Label 
+            Grid.Row="0"
+            Text="MIS FAVORITOS"
+            Style="{StaticResource HeaderLabel}"
+            Margin="0,0,0,20"/>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator 
+            Grid.Row="1"
+            IsRunning="{Binding IsLoading}"
+            IsVisible="{Binding IsLoading}"
+            Color="{StaticResource Primary}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            ZIndex="1"/>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Favorites}">
+            <CollectionView.EmptyView>
+                <Label Text="No tienes emisoras favoritas aún" 
+                       Style="{StaticResource SecondaryLabel}"
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center"
+                       Margin="0,50,0,0"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:FavoriteEntity">
+                    <Frame Margin="0,5" Padding="0" HasShadow="False" CornerRadius="12" BorderColor="#333" BackgroundColor="Transparent">
+                        <Frame.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#1a1a1a" Offset="0.1" />
+                                <GradientStop Color="#252525" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <Grid ColumnDefinitions="65,*,Auto" Padding="12">
+                            <Border Grid.Column="0" StrokeShape="RoundRectangle 8" StrokeThickness="0" HeightRequest="60" WidthRequest="60" BackgroundColor="#2A2A2A">
+                                <Image Source="{Binding ImageUrl}" Aspect="AspectFill" />
+                            </Border>
+                            
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="12,0" Spacing="2">
+                                <Label Text="{Binding Name}" TextColor="White" FontSize="16" FontAttributes="Bold" MaxLines="1" LineBreakMode="TailTruncation"/>
+                                <Label Text="{Binding Genre}" TextColor="{StaticResource Primary}" FontSize="12" MaxLines="1" LineBreakMode="TailTruncation"/>
+                            </VerticalStackLayout>
+
+                            <HorizontalStackLayout Grid.Column="2" Spacing="8" VerticalOptions="Center">
+                                <Button Text="▶" Style="{StaticResource PrimaryButton}" WidthRequest="44" HeightRequest="44" CornerRadius="22" Padding="0"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FavoritesViewModel}}, Path=PlayCommand}"
+                                        CommandParameter="{Binding .}"/>
+
+                                <Button Text="❤️" BackgroundColor="Transparent" TextColor="{StaticResource Primary}" FontSize="20"
+                                        WidthRequest="44" HeightRequest="44" CornerRadius="22" Padding="0"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FavoritesViewModel}}, Path=RemoveFavoriteCommand}"
+                                        CommandParameter="{Binding .}"/>
+                            </HorizontalStackLayout>
+                            
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:FavoritesViewModel}}, Path=PlayCommand}" CommandParameter="{Binding .}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

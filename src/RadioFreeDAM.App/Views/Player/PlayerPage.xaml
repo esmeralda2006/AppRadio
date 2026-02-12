@@ -1,0 +1,110 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:RadioFreeDAM.App.ViewModels.Player"
+             x:DataType="vm:PlayerViewModel"
+             x:Class="RadioFreeDAM.App.Views.Player.PlayerPage"
+             Title="Player">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
+            <toolkit:IsNullConverter x:Key="IsNullConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+        <Label 
+            Grid.Row="0"
+            Text="REPRODUCTOR"
+            Style="{StaticResource HeaderLabel}"
+            Margin="0,20,0,20"/>
+        
+        <VerticalStackLayout 
+            Grid.Row="1"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Spacing="30">
+            
+            <!-- Station Image Placeholder -->
+            <Frame 
+                Style="{StaticResource DarkFrame}"
+                CornerRadius="100"
+                WidthRequest="200"
+                HeightRequest="200"
+                BorderColor="{StaticResource Primary}">
+                <Grid>
+                    <Image Source="{Binding Player.CurrentStation.ImageUrl}" 
+                           Aspect="AspectFill" 
+                           IsVisible="{Binding Player.CurrentStation.ImageUrl, Converter={StaticResource IsNotNullConverter}}">
+                        <Image.Clip>
+                            <RoundRectangleGeometry Rect="0,0,200,200" CornerRadius="100"/>
+                        </Image.Clip>
+                    </Image>
+                    <Label 
+                        Text="🎵"
+                        FontSize="80"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        IsVisible="{Binding Player.CurrentStation.ImageUrl, Converter={StaticResource IsNullConverter}}"/>
+                </Grid>
+            </Frame>
+            
+            <!-- Station Name -->
+            <Label 
+                Text="{Binding Player.CurrentStation.Name, TargetNullValue='Selecciona una emisora'}"
+                TextColor="{StaticResource TextWhite}"
+                FontSize="22"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"/>
+            
+            <!-- Genre -->
+            <Label 
+                Text="{Binding Player.CurrentStation.Genre}"
+                TextColor="{StaticResource Primary}"
+                FontSize="16"
+                HorizontalOptions="Center"/>
+
+            <!-- Status -->
+            <Label 
+                Text="{Binding Player.StatusMessage}"
+                Style="{StaticResource SecondaryLabel}"
+                HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout 
+            Grid.Row="2"
+            Spacing="20"
+            Margin="0,0,0,20">
+            
+            <!-- Play/Stop Controls -->
+            <HorizontalStackLayout 
+                HorizontalOptions="Center"
+                Spacing="20">
+                
+                <Button 
+                    Text="▶"
+                    Style="{StaticResource PrimaryButton}"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    CornerRadius="30"
+                    Padding="0"
+                    FontSize="24"
+                    Command="{Binding Player.PlayCommand}"
+                    CommandParameter="{Binding Player.CurrentStation}"/>
+                
+                <Button 
+                    Text="⏹"
+                    Style="{StaticResource PrimaryButton}"
+                    BackgroundColor="{StaticResource BorderDark}"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    CornerRadius="30"
+                    Padding="0"
+                    FontSize="24"
+                    Command="{Binding Player.StopCommand}"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

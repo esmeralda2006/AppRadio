@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Brand Colors -->
+    <Color x:Key="Primary">#e91e63</Color>
+    <Color x:Key="PrimaryDark">#c2185b</Color>
+    <Color x:Key="Secondary">#f06292</Color>
+    
+    <!-- Background & Surface -->
+    <Color x:Key="BackgroundDark">#0a0a0a</Color>
+    <Color x:Key="SurfaceDark">#1a1a1a</Color>
+    <Color x:Key="BorderDark">#333333</Color>
+    
+    <!-- Text Colors -->
+    <Color x:Key="TextWhite">#FFFFFF</Color>
+    <Color x:Key="TextGray">#808080</Color>
+    <Color x:Key="TextPink">#e91e63</Color>
+
+    <!-- Utility -->
+    <Color x:Key="Error">#FF0000</Color>
+    <Color x:Key="Success">#4CAF50</Color>
+    <Color x:Key="Transparent">Transparent</Color>
+
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundDark}"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceDark}"/>
+    <SolidColorBrush x:Key="TextGrayBrush" Color="{StaticResource TextGray}"/>
+
+</ResourceDictionary>

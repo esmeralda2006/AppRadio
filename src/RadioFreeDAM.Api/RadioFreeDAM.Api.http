@@ -1,0 +1,6 @@
+@RadioFreeDAM.Api_HostAddress = http://localhost:5156
+
+GET {{RadioFreeDAM.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

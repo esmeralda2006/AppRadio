@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:RadioFreeDAM.App.Services.Player"
+             x:Class="RadioFreeDAM.App.Views.Player.PlaybackControlView">
+
+    <Frame BackgroundColor="{StaticResource BorderDark}" 
+           Padding="10" 
+           HasShadow="True"
+           CornerRadius="0"
+           IsVisible="{Binding CurrentStation, Converter={toolkit:IsNotNullConverter}}">
+        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+            
+            <Frame Grid.Column="0" 
+                   Padding="0" 
+                   CornerRadius="5" 
+                   WidthRequest="40" 
+                   HeightRequest="40"
+                   IsClippedToBounds="True">
+                <Image Source="{Binding CurrentStation.ImageUrl}" Aspect="AspectFill"/>
+            </Frame>
+
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                <Label Text="{Binding CurrentStation.Name}" 
+                       TextColor="White" 
+                       FontAttributes="Bold" 
+                       LineBreakMode="TailTruncation"/>
+                <Label Text="{Binding StatusMessage}" 
+                       TextColor="{StaticResource Gray200}" 
+                       FontSize="10"/>
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout Grid.Column="2" Spacing="5" VerticalOptions="Center">
+                <Button Text="{Binding IsPlaying, Converter={toolkit:TextCaseConverter Type=Upper}, ConverterParameter='⏸'}" 
+                        Command="{Binding TogglePlaybackCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource Primary}"
+                        FontSize="20"
+                        WidthRequest="45"/>
+                <Button Text="⏹" 
+                        Command="{Binding StopCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="Red"
+                        FontSize="20"
+                        WidthRequest="45"/>
+            </HorizontalStackLayout>
+        </Grid>
+    </Frame>
+</ContentView>

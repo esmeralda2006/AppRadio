@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="RadioFreeDAM.App.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:auth="clr-namespace:RadioFreeDAM.App.Views.Auth"
+    xmlns:home="clr-namespace:RadioFreeDAM.App.Views.Home"
+    xmlns:player="clr-namespace:RadioFreeDAM.App.Views.Player"
+    xmlns:fav="clr-namespace:RadioFreeDAM.App.Views.Favorites"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:converters="clr-namespace:RadioFreeDAM.App.Converters"
+    Shell.FlyoutBehavior="Disabled">
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#E91E63</Color>
+            <Color x:Key="PrimaryDark">#C2185B</Color>
+            <Color x:Key="Accent">#FF4081</Color>
+            <Color x:Key="PlayerBarBg">#1A1A1A</Color>
+
+            <toolkit:IsNotNullConverter x:Key="IsNotNullConverter" />
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters:BoolToPlayPauseConverter x:Key="BoolToPlayPauseConverter" />
+
+            <!-- Template para todas las páginas con MiniPlayer persistente -->
+            <ControlTemplate x:Key="GlobalPageTemplate">
+                <Grid RowDefinitions="*, Auto">
+                    <ContentPresenter Grid.Row="0" />
+
+                    <Grid Grid.Row="1" 
+                          BackgroundColor="{StaticResource PlayerBarBg}" 
+                          Padding="12,8"
+                          HeightRequest="75"
+                          ColumnDefinitions="Auto, *, Auto"
+                          IsVisible="{Binding Player.CurrentStation, Source={RelativeSource AncestorType={x:Type Shell}}, Converter={StaticResource IsNotNullConverter}}">
+
+                        <Border Grid.Column="0" StrokeShape="RoundRectangle 8" StrokeThickness="0" HeightRequest="55" WidthRequest="55" BackgroundColor="#2A2A2A">
+                            <Image Source="{Binding Player.CurrentStation.ImageUrl, Source={RelativeSource AncestorType={x:Type Shell}}}" Aspect="AspectFill" />
+                        </Border>
+
+                        <VerticalStackLayout Grid.Column="1" Margin="12,0" VerticalOptions="Center" Spacing="2">
+                            <Label Text="{Binding Player.CurrentStation.Name, Source={RelativeSource AncestorType={x:Type Shell}}}"
+                                   FontSize="15" FontAttributes="Bold" TextColor="White" MaxLines="1" LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding Player.StatusMessage, Source={RelativeSource AncestorType={x:Type Shell}}}"
+                                   FontSize="12" TextColor="#B0B0B0" MaxLines="1" LineBreakMode="TailTruncation"/>
+                        </VerticalStackLayout>
+
+                        <HorizontalStackLayout Grid.Column="2" VerticalOptions="Center" Spacing="10">
+                            <ActivityIndicator IsRunning="{Binding Player.IsBuffering, Source={RelativeSource AncestorType={x:Type Shell}}}"
+                                               IsVisible="{Binding Player.IsBuffering, Source={RelativeSource AncestorType={x:Type Shell}}}"
+                                               Color="{StaticResource Primary}" HeightRequest="30" WidthRequest="30"/>
+                            
+                            <Button HeightRequest="44" WidthRequest="44" CornerRadius="22"
+                                    BackgroundColor="{StaticResource Primary}" TextColor="White"
+                                    Command="{Binding Player.TogglePlaybackCommand, Source={RelativeSource AncestorType={x:Type Shell}}}"
+                                    IsVisible="{Binding Player.IsBuffering, Source={RelativeSource AncestorType={x:Type Shell}}, Converter={StaticResource InvertedBoolConverter}}"
+                                    Text="{Binding Player.IsPlaying, Source={RelativeSource AncestorType={x:Type Shell}}, Converter={StaticResource BoolToPlayPauseConverter}}">
+                            </Button>
+                        </HorizontalStackLayout>
+                        
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToPlayerCommand, Source={RelativeSource AncestorType={x:Type Shell}}}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Grid>
+            </ControlTemplate>
+
+            <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+                <Setter Property="ControlTemplate" Value="{StaticResource GlobalPageTemplate}" />
+                <Setter Property="BackgroundColor" Value="#121212" />
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <Shell.FlyoutFooter>
+        <!-- MediaElement global accesible desde el code-behind -->
+        <toolkit:MediaElement x:Name="GlobalPlayerInstance" 
+                             HeightRequest="1" WidthRequest="1" Opacity="0"
+                             IsVisible="False" ShouldAutoPlay="False" />
+    </Shell.FlyoutFooter>
+
+    <ShellContent 
+        Title="Login"
+        Route="login"
+        ContentTemplate="{DataTemplate auth:LoginPage}" 
+        Shell.TabBarIsVisible="False"
+        Shell.NavBarIsVisible="False"/>
+
+    <TabBar Route="main" Shell.TabBarIsVisible="True">
+        <Tab Title="Inicio">
+            <ShellContent ContentTemplate="{DataTemplate home:HomePage}" Route="home" />
+        </Tab>
+        <Tab Title="Reproductor">
+            <ShellContent ContentTemplate="{DataTemplate player:PlayerPage}" Route="player" />
+        </Tab>
+        <Tab Title="Favoritos">
+            <ShellContent ContentTemplate="{DataTemplate fav:FavoritesPage}" Route="favorites" />
+        </Tab>
+    </TabBar>
+
+</Shell>
